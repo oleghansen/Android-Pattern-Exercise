@@ -39,7 +39,7 @@ public class GameScreen extends State {
         eastWall = new Sprite(wallVerImage);
 
         westWall.setPosition(4, 215);
-        eastWall.setPosition(10, canvasWidth); */
+        eastWall.setPosition(10, canvasWidth);  */
 
         heliRightSprite.setPosition(250, 120);
         heliRightSprite.setSpeed(300, 200);
