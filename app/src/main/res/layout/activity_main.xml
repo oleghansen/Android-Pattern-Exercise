@@ -8,10 +8,57 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ole.mygame.MainActivity"
-    android:foreground="@drawable/backgroundstars">
+    android:background="@drawable/backgroundstars2">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="TDT4240: Exercise 1"
+        android:id="@+id/textView2"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:layout_above="@+id/task1Button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 1"
+        android:id="@+id/task1Button"
+        android:background="#72d3de"
+        android:textAlignment="center"
+        android:layout_above="@+id/task2Button"
+        android:layout_alignStart="@+id/task2Button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 2"
+        android:id="@+id/task2Button"
+        android:background="#2e9cb2"
+        android:textAlignment="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 3"
+        android:id="@+id/task3Button"
+        android:background="#4b8fc7"
+        android:textAlignment="center"
+        android:layout_below="@+id/task2Button"
+        android:layout_alignStart="@+id/task4Button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 4"
+        android:id="@+id/task4Button"
+        android:background="#316fba"
+        android:textAlignment="center"
+        android:layout_below="@+id/task3Button"
+        android:layout_alignStart="@+id/task2Button" />
+
 </RelativeLayout>

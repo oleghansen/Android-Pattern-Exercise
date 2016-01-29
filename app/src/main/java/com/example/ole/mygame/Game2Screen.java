@@ -13,47 +13,49 @@ import org.w3c.dom.Text;
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
+import sheep.input.TouchListener;
+import android.view.MotionEvent;
+import android.content.res.Resources;
 
-
-public class GameScreen extends State {
+public class Game2Screen extends State implements TouchListener{
 
     private android.graphics.Canvas deviceCanvas;
     private Image heliImageEast = new Image(R.drawable.heli1_east2);
     private Image heliImageWest= new Image(R.drawable.heli1_west2);
-    private Image wallVerImage = new Image(R.drawable.wall_vertical);
     private Image backgroundImage = new Image(R.drawable.backgroundstars2);
 
-    private Sprite westWall, eastWall;
     private Sprite backSprite;
     private Sprite heliRightSprite;
 
     private float x, y, xSpeed, ySpeed;
     private int canvasHeight, canvasWidth;
 
-
-
-    public GameScreen() {
-        backSprite = new Sprite(backgroundImage);
-        heliRightSprite = new Sprite(heliImageEast);
-     /* westWall = new Sprite(wallVerImage);
-        eastWall = new Sprite(wallVerImage);
-
-        westWall.setPosition(4, 215);
-        eastWall.setPosition(10, canvasWidth);  */
-
-        heliRightSprite.setPosition(250, 120);
-        heliRightSprite.setSpeed(300, 200);
-
+    @Override
+    public boolean onTouchMove(MotionEvent event) {
+        heliRightSprite.setSpeed((event.getX() - heliRightSprite.getX()),event.getY() - heliRightSprite.getY());
+        return true;
     }
 
+    @Override
+    public boolean onTouchUp(MotionEvent event) {
+
+        heliRightSprite.setSpeed((event.getX() - heliRightSprite.getX()),event.getY() - heliRightSprite.getY());
+        return true;
+    }
+    public Game2Screen(Resources resources) {
+        backSprite = new Sprite(backgroundImage);
+        heliRightSprite = new Sprite(heliImageEast);
+
+        heliRightSprite.setPosition(250, 120);
+        heliRightSprite.setSpeed(0, 0);
+
+    }
+    @Override
     public void draw(android.graphics.Canvas canvas){
         deviceCanvas = canvas;
-        canvasHeight = canvas.getHeight();
-        canvasWidth = canvas.getWidth();
-
+        canvasHeight = deviceCanvas.getHeight();
+        canvasWidth = deviceCanvas.getWidth();
         backSprite.draw(canvas);
-      //westWall.draw(canvas);
-      //eastWall.draw(canvas);
         heliRightSprite.draw(canvas);
     }
 

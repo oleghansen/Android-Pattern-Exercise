@@ -7,16 +7,54 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ole.mygame.MainActivity">
+    tools:context="com.example.ole.mygame.MainActivity"
+    android:background="@drawable/backgroundstars2">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Coordinates"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textColorLink="#ffffff"
-        android:textColor="#ffffff" />
+        android:text="TDT4240: Exercise 1"
+        android:id="@+id/textView2"
+        android:layout_marginBottom="43dp"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:layout_above="@+id/task1Button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 1"
+        android:id="@+id/task1Button"
+        android:background="#72d3de"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/textView2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 2"
+        android:id="@+id/task2Button"
+        android:background="#2e9cb2"
+        android:layout_alignTop="@+id/task1Button"
+        android:layout_toEndOf="@+id/task1Button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 3"
+        android:id="@+id/task3Button"
+        android:background="#4b8fc7"
+        android:layout_below="@+id/textView2"
+        android:layout_toEndOf="@+id/task2Button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task 4"
+        android:id="@+id/task4Button"
+        android:background="#316fba"
+        android:layout_alignTop="@+id/task3Button"
+        android:layout_toEndOf="@+id/task3Button" />
+
 </RelativeLayout>
