@@ -6,71 +6,55 @@ package com.example.ole.mygame;
 
 
 import android.graphics.Canvas;
-import android.graphics.Typeface;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import sheep.game.Sprite;
 import sheep.game.State;
-import sheep.graphics.Font;
 import sheep.graphics.Image;
-import sheep.input.TouchListener;
-import android.view.MotionEvent;
-import android.content.res.Resources;
 
-public class Game2Screen extends State implements TouchListener{
 
-    private android.graphics.Canvas deviceCanvas;
+public class Game3Screen extends State {
+
+    private Canvas deviceCanvas;
     private Image heliImageEast = new Image(R.drawable.heli1_east2);
     private Image heliImageWest= new Image(R.drawable.heli1_west2);
+    private Image wallVerImage = new Image(R.drawable.wall_vertical);
     private Image backgroundImage = new Image(R.drawable.backgroundstars2);
 
+    private Sprite westWall, eastWall;
     private Sprite backSprite;
     private Sprite heliRightSprite;
 
     private float x, y, xSpeed, ySpeed;
     private int canvasHeight, canvasWidth;
 
-    @Override
-    public boolean onTouchMove(MotionEvent event) {
-        heliRightSprite.setSpeed((event.getX() - heliRightSprite.getX()), event.getY() - heliRightSprite.getY());
-        return true;
-    }
 
-    @Override
-    public boolean onTouchUp(MotionEvent event) {
 
-        heliRightSprite.setSpeed((event.getX() - heliRightSprite.getX()),event.getY() - heliRightSprite.getY());
-        if(event.getX() < heliRightSprite.getX())
-        {
-            flip("left");
-        }
-        else if(event.getX() > heliRightSprite.getX())
-        {
-            flip("right");
-        }
-        return true;
-    }
-    public Game2Screen(Resources resources) {
+    public Game3Screen() {
         backSprite = new Sprite(backgroundImage);
         heliRightSprite = new Sprite(heliImageEast);
+     /* westWall = new Sprite(wallVerImage);
+        eastWall = new Sprite(wallVerImage);
+
+        westWall.setPosition(4, 215);
+        eastWall.setPosition(10, canvasWidth);  */
 
         heliRightSprite.setPosition(250, 120);
-        heliRightSprite.setSpeed(0, 0);
+        heliRightSprite.setSpeed(300, 200);
 
     }
     @Override
-    public void draw(android.graphics.Canvas canvas){
+    public void draw(Canvas canvas){
         deviceCanvas = canvas;
-        canvasHeight = deviceCanvas.getHeight();
-        canvasWidth = deviceCanvas.getWidth();
+
+        if(canvas!=null)
+        {
+            canvasHeight = deviceCanvas.getHeight();
+            canvasWidth = deviceCanvas.getWidth();
+        }
         backSprite.draw(canvas);
+      //westWall.draw(canvas);
+      //eastWall.draw(canvas);
         heliRightSprite.draw(canvas);
-
-        Font text = new Font(255, 255, 255, 20, Typeface.SANS_SERIF, Typeface.NORMAL);
-        canvas.drawText("X: " + String.format("%.2f", heliRightSprite.getX() )  + " Y: " + String.format("%.2f", heliRightSprite.getY()), 30, 30, text);
-
     }
 
     public void flip(String direction){

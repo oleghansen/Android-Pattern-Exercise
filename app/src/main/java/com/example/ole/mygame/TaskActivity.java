@@ -8,15 +8,25 @@ import sheep.game.Game;
 /**
  * Created by Ole on 29.01.2016.
  */
-public class Task1Activity extends AppCompatActivity {
+public class TaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Game game = new Game(this, null);
-        game.pushState(new Game1Screen());
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            if(extras.getInt("taskNumber") == 1)
+            {
+                game.pushState(new Game1Screen());
+            }
+            else if(extras.getInt("taskNumber") == 2)
+            {
+                game.pushState(new Game2Screen(game.getResources()));
+            }
+        }
         setContentView(game);
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

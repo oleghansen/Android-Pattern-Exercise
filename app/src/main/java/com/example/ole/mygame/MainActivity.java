@@ -40,17 +40,18 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onClick(View v)
                 {
+                    Intent startTask1 = new Intent("com.example.ole.mygame.TASK1ACTIVITY");
+                    startActivity(startTask1);
+
                     switch(v.getId())
                     {
                         case R.id.task1Button:
                             System.out.println("Pressed 'Task 1'");
-                            Intent startTask1 = new Intent("com.example.ole.mygame.TASK1ACTIVITY");
-                            startActivity(startTask1);
+                            startTask1.putExtra("taskNumber", 1);
                             break;
                         case R.id.task2Button:
                             System.out.println("Pressed 'Task 2'");
-                            Intent startTask2 = new Intent("com.example.ole.mygame.TASK2ACTIVITY");
-                            startActivity(startTask2);
+                            startTask1.putExtra("taskNumber", 2);
                             break;
                         case R.id.task3Button:
                             System.out.println("Pressed 'Task 3'");
@@ -58,7 +59,9 @@ public class MainActivity extends AppCompatActivity{
                         case R.id.task4Button:
                             System.out.println("Pressed 'Task 4'");
                             break;
+
                     }
+                    startActivity(startTask1);
                 }
     };
 
