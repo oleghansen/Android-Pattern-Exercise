@@ -6,12 +6,14 @@ package com.example.ole.mygame;
 
 
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import sheep.game.Sprite;
 import sheep.game.State;
+import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
 import android.view.MotionEvent;
@@ -32,7 +34,7 @@ public class Game2Screen extends State implements TouchListener{
 
     @Override
     public boolean onTouchMove(MotionEvent event) {
-        heliRightSprite.setSpeed((event.getX() - heliRightSprite.getX()),event.getY() - heliRightSprite.getY());
+        heliRightSprite.setSpeed((event.getX() - heliRightSprite.getX()), event.getY() - heliRightSprite.getY());
         return true;
     }
 
@@ -57,6 +59,10 @@ public class Game2Screen extends State implements TouchListener{
         canvasWidth = deviceCanvas.getWidth();
         backSprite.draw(canvas);
         heliRightSprite.draw(canvas);
+
+        Font text = new Font(255, 255, 255, 20, Typeface.SANS_SERIF, Typeface.NORMAL);
+        canvas.drawText("X: " + heliRightSprite.getX() + " Y: " + heliRightSprite.getY(), 30, 30, text);
+
     }
 
     public void flip(String direction){
