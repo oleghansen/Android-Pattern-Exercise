@@ -6,17 +6,19 @@ package com.example.ole.mygame;
 
 
 import android.graphics.Canvas;
+import android.graphics.drawable.AnimationDrawable;
+import android.view.animation.Animation;
+import android.widget.ImageView;
 
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
 
-
 public class Game3Screen extends State {
-
+    private AnimationDrawable heliWestAnim, heliEastAnim;
     private Canvas deviceCanvas;
-    private Image heliImageEast = new Image(R.drawable.heli1_east2);
-    private Image heliImageWest= new Image(R.drawable.heli1_west2);
+    private Image heliImageEast= new Image(R.drawable.heli1_east);
+    private Image heliImageWest= new Image(R.drawable.heli1_west);
     private Image wallVerImage = new Image(R.drawable.wall_vertical);
     private Image backgroundImage = new Image(R.drawable.backgroundstars2);
 
@@ -28,15 +30,17 @@ public class Game3Screen extends State {
     private int canvasHeight, canvasWidth;
 
 
+    private Image heliAnimEast1= new Image(R.drawable.heli1_east_1);
+    private Image heliAnimEast2= new Image(R.drawable.heli1_east_2);
+    private Image heliAnimEast3= new Image(R.drawable.heli1_east_3);
+    private Image heliAnimEast4= new Image(R.drawable.heli1_east_4);
+
 
     public Game3Screen() {
         backSprite = new Sprite(backgroundImage);
         heliRightSprite = new Sprite(heliImageEast);
-     /* westWall = new Sprite(wallVerImage);
-        eastWall = new Sprite(wallVerImage);
 
-        westWall.setPosition(4, 215);
-        eastWall.setPosition(10, canvasWidth);  */
+
 
         heliRightSprite.setPosition(250, 120);
         heliRightSprite.setSpeed(300, 200);
@@ -52,9 +56,8 @@ public class Game3Screen extends State {
             canvasWidth = deviceCanvas.getWidth();
         }
         backSprite.draw(canvas);
-      //westWall.draw(canvas);
-      //eastWall.draw(canvas);
         heliRightSprite.draw(canvas);
+        startAnimation();
     }
 
     public void flip(String direction){
@@ -99,8 +102,19 @@ public class Game3Screen extends State {
         {
             heliRightSprite.setSpeed(heliRightSprite.getSpeed().getX(), -heliRightSprite.getSpeed().getY());
         }
-        System.out.println(heliRightSprite.getX() + " , " + heliRightSprite.getY());
 
         heliRightSprite.update(dt);
+    }
+
+    public void startAnimation()
+    {
+        long lastSec = 0;
+        while(true){
+            long sec = System.currentTimeMillis() / 1000;
+            if (sec != lastSec) {
+
+                lastSec = sec;
+            }
+        }
     }
 }

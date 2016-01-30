@@ -5,11 +5,7 @@ package com.example.ole.mygame;
  */
 
 
-import android.graphics.Canvas;
 import android.graphics.Typeface;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import sheep.game.Sprite;
 import sheep.game.State;

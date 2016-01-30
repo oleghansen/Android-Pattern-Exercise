@@ -55,9 +55,11 @@ public class MainActivity extends AppCompatActivity{
                             break;
                         case R.id.task3Button:
                             System.out.println("Pressed 'Task 3'");
+                            startTask1.putExtra("taskNumber", 3);
                             break;
                         case R.id.task4Button:
                             System.out.println("Pressed 'Task 4'");
+                            startTask1.putExtra("taskNumber", 4);
                             break;
 
                     }

@@ -24,6 +24,14 @@ public class TaskActivity extends AppCompatActivity {
             {
                 game.pushState(new Game2Screen(game.getResources()));
             }
+            else if(extras.getInt("taskNumber") == 3)
+            {
+                game.pushState(new Game3Screen());
+            }
+            else if(extras.getInt("taskNumber") == 4)
+            {
+                game.pushState(new Pong());
+            }
         }
         setContentView(game);
     }
