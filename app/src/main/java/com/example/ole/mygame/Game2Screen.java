@@ -19,13 +19,10 @@ public class Game2Screen extends State implements TouchListener{
 
     private android.graphics.Canvas deviceCanvas;
     private Image heliImageEast = new Image(R.drawable.heli1_east2);
-    private Image heliImageWest= new Image(R.drawable.heli1_west2);
     private Image backgroundImage = new Image(R.drawable.backgroundstars2);
 
     private Sprite backSprite;
     private Sprite heliRightSprite;
-
-    private float x, y, xSpeed, ySpeed;
     private int canvasHeight, canvasWidth;
 
     @Override
@@ -48,44 +45,38 @@ public class Game2Screen extends State implements TouchListener{
         }
         return true;
     }
-    public Game2Screen(Resources resources) {
+    public Game2Screen() {
         backSprite = new Sprite(backgroundImage);
         heliRightSprite = new Sprite(heliImageEast);
-
         heliRightSprite.setPosition(250, 120);
         heliRightSprite.setSpeed(0, 0);
 
     }
     @Override
     public void draw(android.graphics.Canvas canvas){
-        deviceCanvas = canvas;
-        canvasHeight = deviceCanvas.getHeight();
-        canvasWidth = deviceCanvas.getWidth();
-        backSprite.draw(canvas);
-        heliRightSprite.draw(canvas);
+        if(deviceCanvas == null)
+        {
+            deviceCanvas = canvas;
+            canvasHeight = deviceCanvas.getHeight();
+            canvasWidth = deviceCanvas.getWidth();
+        }
+
+        backSprite.draw(deviceCanvas);
+        heliRightSprite.draw(deviceCanvas);
 
         Font text = new Font(255, 255, 255, 20, Typeface.SANS_SERIF, Typeface.NORMAL);
-        canvas.drawText("X: " + String.format("%.2f", heliRightSprite.getX() )  + " Y: " + String.format("%.2f", heliRightSprite.getY()), 30, 30, text);
+        deviceCanvas.drawText("X: " + String.format("%.2f", heliRightSprite.getX()) + " Y: " + String.format("%.2f", heliRightSprite.getY()), 30, 30, text);
 
     }
 
     public void flip(String direction){
-        x = heliRightSprite.getX();
-        y = heliRightSprite.getY();
-        ySpeed = heliRightSprite.getSpeed().getY();
-        xSpeed = heliRightSprite.getSpeed().getX();
-
         if(direction.equals("left"))
         {
-            heliRightSprite = new Sprite(heliImageWest);
-            heliRightSprite.setPosition(x-1, y);
-            heliRightSprite.setSpeed(xSpeed, ySpeed);
+            heliRightSprite.setScale(-1, 1);
         }
         else if(direction.equals("right"))
         {
-            heliRightSprite = new Sprite(heliImageEast);
-            heliRightSprite.setPosition(x+1, y);
-            heliRightSprite.setSpeed(xSpeed, ySpeed);
+            heliRightSprite.setScale(1, 1);
         }
     }
 
@@ -115,4 +106,5 @@ public class Game2Screen extends State implements TouchListener{
 
         heliRightSprite.update(dt);
     }
+
 }

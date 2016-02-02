@@ -6,81 +6,83 @@ package com.example.ole.mygame;
 
 
 import android.graphics.Canvas;
-import android.graphics.drawable.AnimationDrawable;
-import android.view.animation.Animation;
-import android.widget.ImageView;
-
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
+import sheep.graphics.SpriteView;
 
 public class Game3Screen extends State {
-    private AnimationDrawable heliWestAnim, heliEastAnim;
     private Canvas deviceCanvas;
     private Image heliImageEast= new Image(R.drawable.heli1_east);
-    private Image heliImageWest= new Image(R.drawable.heli1_west);
-    private Image wallVerImage = new Image(R.drawable.wall_vertical);
     private Image backgroundImage = new Image(R.drawable.backgroundstars2);
 
-    private Sprite westWall, eastWall;
     private Sprite backSprite;
     private Sprite heliRightSprite;
 
-    private float x, y, xSpeed, ySpeed;
     private int canvasHeight, canvasWidth;
+    private float animationCounter = 0;
 
-
-    private Image heliAnimEast1= new Image(R.drawable.heli1_east_1);
-    private Image heliAnimEast2= new Image(R.drawable.heli1_east_2);
-    private Image heliAnimEast3= new Image(R.drawable.heli1_east_3);
-    private Image heliAnimEast4= new Image(R.drawable.heli1_east_4);
-
+    private SpriteView heliAnimEast1= new Image(R.drawable.heli1_east_1);
+    private SpriteView heliAnimEast2= new Image(R.drawable.heli1_east_2);
+    private SpriteView heliAnimEast3= new Image(R.drawable.heli1_east_3);
+    private SpriteView heliAnimEast4= new Image(R.drawable.heli1_east_4);
 
     public Game3Screen() {
         backSprite = new Sprite(backgroundImage);
         heliRightSprite = new Sprite(heliImageEast);
-
-
-
+        heliRightSprite.setView(heliAnimEast1);
         heliRightSprite.setPosition(250, 120);
         heliRightSprite.setSpeed(300, 200);
 
     }
     @Override
     public void draw(Canvas canvas){
-        deviceCanvas = canvas;
-
-        if(canvas!=null)
+        if(deviceCanvas==null)
         {
+            deviceCanvas = canvas;
             canvasHeight = deviceCanvas.getHeight();
             canvasWidth = deviceCanvas.getWidth();
         }
-        backSprite.draw(canvas);
-        heliRightSprite.draw(canvas);
-        startAnimation();
+        backSprite.draw(deviceCanvas);
+        heliRightSprite.draw(deviceCanvas);
     }
 
     public void flip(String direction){
-        x = heliRightSprite.getX();
-        y = heliRightSprite.getY();
-        ySpeed = heliRightSprite.getSpeed().getY();
-        xSpeed = heliRightSprite.getSpeed().getX();
-
         if(direction.equals("left"))
         {
-            heliRightSprite = new Sprite(heliImageWest);
-            heliRightSprite.setPosition(x-1, y);
-            heliRightSprite.setSpeed(xSpeed, ySpeed);
+            heliRightSprite.setScale(-1, 1);
         }
         else if(direction.equals("right"))
         {
-            heliRightSprite = new Sprite(heliImageEast);
-            heliRightSprite.setPosition(x+1, y);
-            heliRightSprite.setSpeed(xSpeed, ySpeed);
+            heliRightSprite.setScale(1, 1);
         }
     }
 
-    public void update(float dt) {
+    public void update(float dt)
+    {
+        animationCounter = animationCounter +  dt;
+
+        System.out.println(animationCounter);
+        if(animationCounter >= 0.100)
+        {
+           if(heliRightSprite.getView() == heliAnimEast1)
+           {
+               heliRightSprite.setView(heliAnimEast2);
+           }
+           else if(heliRightSprite.getView() == heliAnimEast2)
+           {
+               heliRightSprite.setView(heliAnimEast3);
+           }
+           else if(heliRightSprite.getView() == heliAnimEast3)
+           {
+               heliRightSprite.setView(heliAnimEast4);
+           }
+           else if (heliRightSprite.getView() == heliAnimEast4)
+           {
+                heliRightSprite.setView(heliAnimEast1);
+           }
+            animationCounter = 0;
+        }
 
         if(heliRightSprite.getX()>=canvasWidth)
         {
@@ -104,17 +106,5 @@ public class Game3Screen extends State {
         }
 
         heliRightSprite.update(dt);
-    }
-
-    public void startAnimation()
-    {
-        long lastSec = 0;
-        while(true){
-            long sec = System.currentTimeMillis() / 1000;
-            if (sec != lastSec) {
-
-                lastSec = sec;
-            }
-        }
     }
 }

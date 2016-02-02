@@ -5,11 +5,6 @@ package com.example.ole.mygame;
  */
 
 
-import android.graphics.Canvas;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Image;
@@ -23,11 +18,8 @@ public class Game1Screen extends State {
     private Image wallVerImage = new Image(R.drawable.wall_vertical);
     private Image backgroundImage = new Image(R.drawable.backgroundstars2);
 
-    private Sprite westWall, eastWall;
     private Sprite backSprite;
     private Sprite heliRightSprite;
-
-    private float x, y, xSpeed, ySpeed;
     private int canvasHeight, canvasWidth;
 
 
@@ -43,36 +35,24 @@ public class Game1Screen extends State {
     }
     @Override
     public void draw(android.graphics.Canvas canvas){
-        deviceCanvas = canvas;
-
-        if(canvas!=null)
+        if(deviceCanvas==null)
         {
+            deviceCanvas = canvas;
             canvasHeight = deviceCanvas.getHeight();
             canvasWidth = deviceCanvas.getWidth();
         }
-        backSprite.draw(canvas);
-      //westWall.draw(canvas);
-      //eastWall.draw(canvas);
-        heliRightSprite.draw(canvas);
+        backSprite.draw(deviceCanvas);
+        heliRightSprite.draw(deviceCanvas);
     }
 
     public void flip(String direction){
-        x = heliRightSprite.getX();
-        y = heliRightSprite.getY();
-        ySpeed = heliRightSprite.getSpeed().getY();
-        xSpeed = heliRightSprite.getSpeed().getX();
-
         if(direction.equals("left"))
         {
-            heliRightSprite = new Sprite(heliImageWest);
-            heliRightSprite.setPosition(x-1, y);
-            heliRightSprite.setSpeed(xSpeed, ySpeed);
+            heliRightSprite.setScale(-1, 1);
         }
         else if(direction.equals("right"))
         {
-            heliRightSprite = new Sprite(heliImageEast);
-            heliRightSprite.setPosition(x+1, y);
-            heliRightSprite.setSpeed(xSpeed, ySpeed);
+            heliRightSprite.setScale(1, 1);
         }
     }
 
