@@ -25,16 +25,19 @@ public class Pong extends State implements TouchListener, CollisionListener {
 
     private boolean begun;
     private Canvas deviceCanvas;
-    private Image ballImage= new Image(R.drawable.ball);
+    private Image ballImage = new Image(R.drawable.ball);
     private Image playerOneImage = new Image(R.drawable.player1);
     private Image playerTwoImage = new Image(R.drawable.player2);
     private Image backgroundImage = new Image(R.drawable.pongbg);
+    private Image midwallImage = new Image(R.drawable.midwall);
 
-    private Sprite westWall, eastWall;
+
     private Sprite backSprite;
     private Sprite ballSprite;
     private Sprite player1Sprite;
     private Sprite player2Sprite;
+    private Sprite midwallSprite;
+
     private int canvasHeight, canvasWidth;
     private int playerOneScore, playerTwoScore;
     private CollisionLayer collisionLayer = new CollisionLayer();
@@ -60,30 +63,16 @@ public class Pong extends State implements TouchListener, CollisionListener {
                     break;
             }
         }
-       /*
-        if(event.getX() < canvasWidth / 2)
-        {
-            player2Sprite.setPosition((player2Sprite.getX()), event.getY());
-        }
-        else if(event.getX() > canvasWidth / 2)
-        {
-            player1Sprite.setPosition((player1Sprite.getX()), event.getY());
-        }
-        else if(event.getX(1) < canvasWidth / 2)
-        {
-            player1Sprite.setPosition((player1Sprite.getX()), event.getY());
-        }
-        else if(event.getX(1) > canvasWidth / 2)
-        {
-            player1Sprite.setPosition((player1Sprite.getX()), event.getY());
-        } */
         return true;
     }
 
     public Pong() {
-        playerOneScore = 0; playerTwoScore = 0;
+        playerOneScore = 0;
+        playerTwoScore = 0;
         begun = false;
         backSprite = new Sprite(backgroundImage);
+        midwallSprite = new Sprite(midwallImage);
+
         ballSprite = new Sprite(ballImage);
         player1Sprite = new Sprite(playerOneImage);
         player2Sprite = new Sprite(playerTwoImage);
@@ -103,33 +92,33 @@ public class Pong extends State implements TouchListener, CollisionListener {
     }
 
 
-    public void resetBall()
-    {
+    public void resetBall() {
         Random random = new Random();
-        int randomXspeed = (random.nextInt(400)+200) * (Math.random() < 0.5 ? -1 : 1);
-        int randomYspeed = (random.nextInt(400)+200) * (Math.random() < 0.5 ? -1 : 1);
+        int randomXspeed = (random.nextInt(400) + 200) * (Math.random() < 0.5 ? -1 : 1);
+        int randomYspeed = (random.nextInt(400) + 200) * (Math.random() < 0.5 ? -1 : 1);
 
         ballSprite.setPosition(canvasWidth / 2, canvasHeight / 2);
         ballSprite.setSpeed(randomXspeed, randomYspeed);
     }
 
     @Override
-    public void draw(Canvas canvas){
+    public void draw(Canvas canvas) {
 
-        if(deviceCanvas==null)
-        {
+        if (deviceCanvas == null) {
             deviceCanvas = canvas;
             canvasHeight = deviceCanvas.getHeight();
             canvasWidth = deviceCanvas.getWidth();
+            midwallSprite.setPosition(canvasWidth / 2, canvasHeight);
         }
-        if(!begun)
-        {
-            player1Sprite.setPosition(canvasWidth-20, canvasHeight / 2);
+        if (!begun) {
+            player1Sprite.setPosition(canvasWidth - 20, canvasHeight / 2);
             player2Sprite.setPosition(20, canvasHeight / 2);
+
             begun = true;
         }
 
         backSprite.draw(deviceCanvas);
+        midwallSprite.draw(deviceCanvas);
         ballSprite.draw(deviceCanvas);
         player1Sprite.draw(deviceCanvas);
         player2Sprite.draw(deviceCanvas);
@@ -138,59 +127,48 @@ public class Pong extends State implements TouchListener, CollisionListener {
         Font playerOneScoreText = new Font(50, 50, 255, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
         deviceCanvas.drawText("" + playerOneScore, (canvasWidth / 2 + 50), 50, playerOneScoreText);
         Font playerTwoScoreText = new Font(255, 50, 50, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
-        deviceCanvas.drawText(""+playerTwoScore, (canvasWidth / 2 - 50), 50,  playerTwoScoreText);
+        deviceCanvas.drawText("" + playerTwoScore, (canvasWidth / 2 - 80), 50, playerTwoScoreText);
     }
 
     public void update(float dt) {
 
+        if (playerOneScore == 21 || playerTwoScore == 21) {
+            System.out.println("Game over");
+            playerOneScore = 0;
+            playerTwoScore = 0;
+            resetBall();
+        }
+
+        if (ballSprite.collides(player1Sprite) || ballSprite.collides(player2Sprite)) {
+            ballSprite.setSpeed(-ballSprite.getSpeed().getX(), ballSprite.getSpeed().getY());
+        }
         /// Screen borders ///
 
-        if(ballSprite.getX()>=canvasWidth)
-        {
-            // ballSprite.setSpeed(-ballSprite.getSpeed().getX(), ballSprite.getSpeed().getY());
+        if (ballSprite.getX() >= canvasWidth) {
             resetBall();
             playerTwoScore++;
         }
-        if(ballSprite.getX() <= 0) {
-
-            //ballSprite.setSpeed(-ballSprite.getSpeed().getX(), ballSprite.getSpeed().getY());
+        if (ballSprite.getX() <= 0) {
             resetBall();
             playerOneScore++;
         }
 
-        if(ballSprite.getY() >= canvasHeight)
-        {
+        if (ballSprite.getY() >= canvasHeight) {
             ballSprite.setSpeed(ballSprite.getSpeed().getX(), -ballSprite.getSpeed().getY());
         }
 
-        if(ballSprite.getY() <= 0)
-        {
+        if (ballSprite.getY() <= 0) {
             ballSprite.setSpeed(ballSprite.getSpeed().getX(), -ballSprite.getSpeed().getY());
         }
-        System.out.println(player1Sprite.getPosition());
-
-    /*    if(ballSprite.getX() >= canvasWidth-30 && ballSprite.getY() < player1Sprite.getY() && ballSprite.getY() > (player1Sprite.getY() - 150))
-        {
-            playerOneScore += 1111;
-            ballSprite.setSpeed(-ballSprite.getSpeed().getX(), ballSprite.getSpeed().getY());
-        }*/
-        /// END SCREEN BORDERS //
         player1Sprite.update(dt);
         player2Sprite.update(dt);
         ballSprite.update(dt);
+        midwallSprite.update(dt);
         world.update(dt);
     }
 
     @Override
     public void collided(Sprite sprite, Sprite sprite1) {
 
-        if(ballSprite.getY()>canvasHeight - (canvasHeight / 4) - playerOneImage.getHeight() - (ballImage.getHeight() / 2)) {
-            ballSprite.setSpeed(-ballSprite.getSpeed().getX(), ballSprite.getSpeed().getY());
-            System.out.println("Collision 1!");
-        }
-        if(ballSprite.getY() < (canvasHeight / 4) + playerOneImage.getHeight()+(ballImage.getHeight()/2)){
-            ballSprite.setSpeed(-ballSprite.getSpeed().getX(), ballSprite.getSpeed().getY());
-            System.out.println("Collision 2!");
-        }
     }
 }

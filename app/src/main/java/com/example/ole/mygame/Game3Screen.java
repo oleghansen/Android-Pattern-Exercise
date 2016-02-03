@@ -114,30 +114,23 @@ public class Game3Screen extends State implements CollisionListener {
 
     public void update(float dt) {
 
-        if(flySprite.collides(ufoSprite)) {
+        if (flySprite.collides(ufoSprite)) {
 
-                flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
-                ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
-                System.out.println("Collision 1!");
+            flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
+            ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
+            System.out.println("Collision 1!");
 
+        } else if (flySprite.collides(heliRightSprite)) {
+
+            flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
+            heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
+            System.out.println("Collision 2!");
+
+        } else if (ufoSprite.collides(heliRightSprite)) {
+            ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
+            heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
+            System.out.println("Collision 3!");
         }
-            else if(flySprite.collides(heliRightSprite)) {
-
-                flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
-                heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
-                System.out.println("Collision 2!");
-
-        }
-
-        else if(ufoSprite.collides(heliRightSprite)) {
-
-                ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
-                heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
-                System.out.println("Collision 3!");
-
-        }
-
-
 
         animationCounter = animationCounter + dt;
 
