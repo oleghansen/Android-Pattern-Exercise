@@ -115,26 +115,26 @@ public class Game3Screen extends State implements CollisionListener {
     public void update(float dt) {
 
         if(flySprite.collides(ufoSprite)) {
-            if (flySprite.getY() > canvasHeight - (canvasHeight / 4) - ufoImage.getHeight() - (planeImageEast.getHeight() / 2)) {
+
                 flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
                 ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
                 System.out.println("Collision 1!");
-            }
+
         }
             else if(flySprite.collides(heliRightSprite)) {
-            if (flySprite.getY() > canvasHeight - (canvasHeight / 4) - heliImageEast.getHeight() - (planeImageEast.getHeight() / 2)) {
+
                 flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
                 heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
                 System.out.println("Collision 2!");
-            }
+
         }
 
         else if(ufoSprite.collides(heliRightSprite)) {
-            if (ufoSprite.getY() > canvasHeight - (canvasHeight / 4) - heliImageEast.getHeight() - (ufoImage.getHeight() / 2)) {
+
                 ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
                 heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
                 System.out.println("Collision 3!");
-            }
+
         }
 
 
