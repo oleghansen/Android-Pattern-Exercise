@@ -17,13 +17,14 @@ import java.util.Random;
 import sheep.collision.CollisionLayer;
 import sheep.collision.CollisionListener;
 
-import sheep.game.Game;
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.game.World;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
+import java.util.Observable;
+import java.util.ArrayList;
 
 public class GameScreen extends State implements TouchListener, CollisionListener {
 
@@ -34,7 +35,6 @@ public class GameScreen extends State implements TouchListener, CollisionListene
     private Image playerTwoImage = new Image(R.drawable.player2);
     private Image backgroundImage = new Image(R.drawable.pongbg);
     private Image midwallImage = new Image(R.drawable.midwall);
-
 
     private Sprite backSprite;
     private Sprite ballSprite;
@@ -48,6 +48,8 @@ public class GameScreen extends State implements TouchListener, CollisionListene
     private World world = new World();
     private static GameScreen instance = null;
 
+    private Score score;
+    private ArrayList<Score> scores;
 
     public GameScreen() {
         playerOneScore = 0;
