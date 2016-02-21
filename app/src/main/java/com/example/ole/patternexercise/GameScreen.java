@@ -43,7 +43,7 @@ public class GameScreen extends State implements TouchListener, CollisionListene
     private Sprite midwallSprite;
 
     private int canvasHeight, canvasWidth;
-    private int playerOneScore, playerTwoScore;
+
     private CollisionLayer collisionLayer = new CollisionLayer();
     private World world = new World();
     private static GameScreen instance = null;
@@ -52,8 +52,10 @@ public class GameScreen extends State implements TouchListener, CollisionListene
     private ArrayList<Score> scores;
 
     public GameScreen() {
-        playerOneScore = 0;
-        playerTwoScore = 0;
+        score = new Score();
+        scores = new ArrayList<>();
+        scores.add(score);
+
         begun = false;
         backSprite = new Sprite(backgroundImage);
         midwallSprite = new Sprite(midwallImage);
@@ -76,6 +78,14 @@ public class GameScreen extends State implements TouchListener, CollisionListene
         world.addLayer(collisionLayer);
     }
 
+    public void notifyObservers(int player)
+    {
+            score.addPoint(player);
+            if(score.getPlayerOneScore() >= 21 || score.getPlayerTwoScore() >= 21)
+            {
+                score.resetScore();
+            }
+    }
     public static GameScreen getInstance() {
         if(instance == null) {
             instance = new GameScreen();
@@ -138,20 +148,12 @@ public class GameScreen extends State implements TouchListener, CollisionListene
         world.draw(deviceCanvas);
 
         Font playerOneScoreText = new Font(50, 50, 255, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
-        deviceCanvas.drawText("" + playerOneScore, (canvasWidth / 2 + 50), 50, playerOneScoreText);
+        deviceCanvas.drawText("" + score.getPlayerOneScore(), (canvasWidth / 2 + 50), 50, playerOneScoreText);
         Font playerTwoScoreText = new Font(255, 50, 50, 50, Typeface.SANS_SERIF, Typeface.NORMAL);
-        deviceCanvas.drawText("" + playerTwoScore, (canvasWidth / 2 - 80), 50, playerTwoScoreText);
+        deviceCanvas.drawText("" + score.getPlayerTwoScore(), (canvasWidth / 2 - 80), 50, playerTwoScoreText);
     }
 
     public void update(float dt) {
-
-        if (playerOneScore == 21 || playerTwoScore == 21) {
-            System.out.println("Game over");
-            playerOneScore = 0;
-            playerTwoScore = 0;
-            resetBall();
-        }
-
         if (ballSprite.collides(player1Sprite) || ballSprite.collides(player2Sprite)) {
             ballSprite.setSpeed(-ballSprite.getSpeed().getX(), ballSprite.getSpeed().getY());
         }
@@ -159,11 +161,11 @@ public class GameScreen extends State implements TouchListener, CollisionListene
 
         if (ballSprite.getX() >= canvasWidth) {
             resetBall();
-            playerTwoScore++;
+            notifyObservers(1);
         }
         if (ballSprite.getX() <= 0) {
             resetBall();
-            playerOneScore++;
+            notifyObservers(2);
         }
 
         if (ballSprite.getY() >= canvasHeight) {

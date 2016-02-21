@@ -25,6 +25,12 @@ public class Score {
         }
     }
 
+    public void resetScore()
+    {
+        playerOneScore = 0;
+        playerTwoScore = 0;
+    }
+
     public int getPlayerOneScore()
     {
         return playerOneScore;
