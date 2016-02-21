@@ -12,8 +12,6 @@ import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 
-import java.util.Random;
-
 import sheep.collision.CollisionLayer;
 import sheep.collision.CollisionListener;
 
@@ -23,7 +21,7 @@ import sheep.game.World;
 import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
-import java.util.Observable;
+
 import java.util.ArrayList;
 
 public class GameScreen extends State implements TouchListener, CollisionListener {
@@ -44,10 +42,11 @@ public class GameScreen extends State implements TouchListener, CollisionListene
 
     private int canvasHeight, canvasWidth;
 
-    private CollisionLayer collisionLayer = new CollisionLayer();
-    private World world = new World();
     private static GameScreen instance = null;
 
+    private CollisionLayer collisionLayer = new CollisionLayer();
+    private World world = new World();
+    private Ball ball;
     private Score score;
     private ArrayList<Score> scores;
 
@@ -56,6 +55,7 @@ public class GameScreen extends State implements TouchListener, CollisionListene
         scores = new ArrayList<>();
         scores.add(score);
 
+        ball = new Ball();
         begun = false;
         backSprite = new Sprite(backgroundImage);
         midwallSprite = new Sprite(midwallImage);
@@ -69,7 +69,7 @@ public class GameScreen extends State implements TouchListener, CollisionListene
         collisionLayer.addSprite(ballSprite);
 
         ballSprite.setPosition(canvasWidth / 2, canvasHeight / 2);
-        ballSprite.setSpeed(400, 200);
+        ballSprite.setSpeed(ball.getSpeedX(), ball.getSpeedY());
 
         player1Sprite.addCollisionListener(this);
         player2Sprite.addCollisionListener(this);
@@ -93,13 +93,10 @@ public class GameScreen extends State implements TouchListener, CollisionListene
         return instance;
     }
 
-    public void resetBall() {
-        Random random = new Random();
-        int randomXspeed = (random.nextInt(400) + 200) * (Math.random() < 0.5 ? -1 : 1);
-        int randomYspeed = (random.nextInt(400) + 200) * (Math.random() < 0.5 ? -1 : 1);
-
+    public void notifyBallReset() {
+        ball.setRandomSpeed();
         ballSprite.setPosition(canvasWidth / 2, canvasHeight / 2);
-        ballSprite.setSpeed(randomXspeed, randomYspeed);
+        ballSprite.setSpeed(ball.getSpeedX(), ball.getSpeedY());
     }
 
     @Override
@@ -160,11 +157,11 @@ public class GameScreen extends State implements TouchListener, CollisionListene
         /// Screen borders ///
 
         if (ballSprite.getX() >= canvasWidth) {
-            resetBall();
+            notifyBallReset();
             notifyObservers(1);
         }
         if (ballSprite.getX() <= 0) {
-            resetBall();
+            notifyBallReset();
             notifyObservers(2);
         }
 
