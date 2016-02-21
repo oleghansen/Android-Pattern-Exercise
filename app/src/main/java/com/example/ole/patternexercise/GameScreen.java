@@ -95,8 +95,6 @@ public class GameScreen extends State implements TouchListener, CollisionListene
 
     public void notifyBallReset() {
         ball.setRandomSpeed();
-        ballSprite.setPosition(canvasWidth / 2, canvasHeight / 2);
-        ballSprite.setSpeed(ball.getSpeedX(), ball.getSpeedY());
     }
 
     @Override
@@ -158,20 +156,21 @@ public class GameScreen extends State implements TouchListener, CollisionListene
 
         if (ballSprite.getX() >= canvasWidth) {
             notifyBallReset();
+            ballSprite.setPosition(canvasWidth / 2, canvasHeight / 2);
+            ballSprite.setSpeed(ball.getSpeedX(), ball.getSpeedY());
             notifyObservers(1);
         }
         if (ballSprite.getX() <= 0) {
             notifyBallReset();
+            ballSprite.setPosition(canvasWidth / 2, canvasHeight / 2);
+            ballSprite.setSpeed(ball.getSpeedX(), ball.getSpeedY());
             notifyObservers(2);
         }
 
-        if (ballSprite.getY() >= canvasHeight) {
+        if (ballSprite.getY() >= canvasHeight || ballSprite.getY() <= 0) {
             ballSprite.setSpeed(ballSprite.getSpeed().getX(), -ballSprite.getSpeed().getY());
         }
 
-        if (ballSprite.getY() <= 0) {
-            ballSprite.setSpeed(ballSprite.getSpeed().getX(), -ballSprite.getSpeed().getY());
-        }
         player1Sprite.update(dt);
         player2Sprite.update(dt);
         ballSprite.update(dt);
