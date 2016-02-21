@@ -1,4 +1,4 @@
-package com.example.ole.mygame;
+package com.example.ole.patternexercise;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package com.example.ole.mygame;
+package com.example.ole.patternexercise;
 
 import org.junit.Test;
 

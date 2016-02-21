@@ -1,7 +1,7 @@
-package com.example.ole.mygame;
+package com.example.ole.patternexercise;
 
 /**
- * Created by Ole on 28.01.2016.
+ * Created by  Ole on 18.02.2016.
  */
 
 
@@ -15,7 +15,7 @@ import sheep.game.World;
 import sheep.collision.CollisionLayer;
 import sheep.collision.CollisionListener;
 
-public class Game3Screen extends State implements CollisionListener {
+public class GameScreen extends State implements CollisionListener {
     private final int RIGHT = 1, LEFT = 2;
     private Canvas deviceCanvas;
     private Image heliImageEast = new Image(R.drawable.heli1_east);
@@ -36,7 +36,9 @@ public class Game3Screen extends State implements CollisionListener {
     private SpriteView heliAnimEast3 = new Image(R.drawable.heli1_east_3);
     private SpriteView heliAnimEast4 = new Image(R.drawable.heli1_east_4);
 
-    public Game3Screen() {
+    private static GameScreen instance = null;
+
+    public GameScreen() {
         backSprite = new Sprite(backgroundImage);
 
         flySprite = new Sprite(planeImageEast);
@@ -61,9 +63,15 @@ public class Game3Screen extends State implements CollisionListener {
         ufoSprite.addCollisionListener(this);
 
         world.addLayer(collisionLayer);
-
     }
 
+    public static GameScreen getInstance() {
+        if(instance == null)
+        {
+            instance = new GameScreen();
+        }
+        return instance;
+    }
     @Override
     public void draw(Canvas canvas) {
         if (deviceCanvas == null) {
@@ -118,18 +126,13 @@ public class Game3Screen extends State implements CollisionListener {
 
             flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
             ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
-            System.out.println("Collision 1!");
-
         } else if (flySprite.collides(heliRightSprite)) {
 
             flySprite.setSpeed(-flySprite.getSpeed().getX(), flySprite.getSpeed().getY());
             heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
-            System.out.println("Collision 2!");
-
         } else if (ufoSprite.collides(heliRightSprite)) {
             ufoSprite.setSpeed(-ufoSprite.getSpeed().getX(), ufoSprite.getSpeed().getY());
             heliRightSprite.setSpeed(-heliRightSprite.getSpeed().getX(), heliRightSprite.getSpeed().getY());
-            System.out.println("Collision 3!");
         }
 
         animationCounter = animationCounter + dt;
@@ -199,7 +202,6 @@ public class Game3Screen extends State implements CollisionListener {
         if (ufoSprite.getY() <= 20) {
             ufoSprite.setSpeed(ufoSprite.getSpeed().getX(), -ufoSprite.getSpeed().getY());
         }
-
 
         heliRightSprite.update(dt);
         flySprite.update(dt);

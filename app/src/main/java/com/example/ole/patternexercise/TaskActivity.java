@@ -1,4 +1,4 @@
-package com.example.ole.mygame;
+package com.example.ole.patternexercise;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,21 +23,10 @@ public class TaskActivity extends AppCompatActivity {
 
         if(extras != null)
         {
-            if(extras.getInt("taskNumber") == 1)
+            if(extras.getInt("taskNumber") == 3)
             {
-                game.pushState(new Game1Screen());
-            }
-            else if(extras.getInt("taskNumber") == 2)
-            {
-                game.pushState(new Game2Screen());
-            }
-            else if(extras.getInt("taskNumber") == 3)
-            {
-                game.pushState(new Game3Screen());
-            }
-            else if(extras.getInt("taskNumber") == 4)
-            {
-                game.pushState(new Pong());
+                game.pushState(new GameScreen().getInstance());
+                System.out.println("New game instance!");
             }
         }
         setContentView(game);
