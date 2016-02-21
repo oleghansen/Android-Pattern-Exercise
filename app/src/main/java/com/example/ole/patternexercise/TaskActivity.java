@@ -19,8 +19,6 @@ public class TaskActivity extends AppCompatActivity {
         {
             extras = getIntent().getExtras();
         }
-
-
         if(extras != null)
         {
             if(extras.getInt("taskNumber") == 3)
